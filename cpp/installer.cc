@@ -1,7 +1,8 @@
 /** \brief A tool for installing IxTheo and KrimDok from scratch on Ubuntu systems.
  *  \author Dr. Johannes Ruscheinski (johannes.ruscheinski@uni-tuebingen.de)
+ *  \author Steven Lolong (steven.lolong@uni-tuebingen.de)
  *
- *  \copyright 2016-2021 Universitätsbibliothek Tübingen.  All rights reserved.
+ *  \copyright 2016-2024 Universitätsbibliothek Tübingen.  All rights reserved.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -809,7 +810,8 @@ void ConfigureVuFind(const bool production, const VuFindSystemType vufind_system
     Echo("Configuring vufind");
     // We need to increase default_socket_timeout for big downloads on slow mirrors, especially Solr (default 60 seconds) .
     TemporaryChDir tmp2(VUFIND_DIRECTORY);
-    ExecUtil::ExecOrDie(ExecUtil::LocateOrDie("php"), { "-d", "default_socket_timeout=600", ExecUtil::LocateOrDie("composer"), "install" });
+    system("composer install");
+
     // We explicitly need to use sudo here, even if we're already root, or it will fail,
     // see https://stackoverflow.com/questions/16151018/how-to-fix-npm-throwing-error-without-sudo
     ExecUtil::ExecOrDie(ExecUtil::LocateOrDie("sudo"), { "npm", "install" });
